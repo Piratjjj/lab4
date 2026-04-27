@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Графика | Dark SVG</title>
+    
+    <!-- Фавиконка -->
+    <link rel="icon" href="image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='45' fill='%23FFD700'/></svg>">
+
+    <style>
+        :root {
+            --bg-primary: #050505;
+            --bg-card: #111116;
+            --text-primary: #e0e0e0;
+            --text-secondary: #7a7a85;
+            --accent: #FFD700;
+            --border: #2a2a30;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            flex: 1;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            color: var(--accent);
+            text-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+            letter-spacing: 1px;
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            margin-top: 8px;
+            font-size: 1rem;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            transition: transform 0.3s, border-color 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+        }
+
+        .card h3 {
+            margin-bottom: 20px;
+            font-size: 1.4rem;
+            color: #fff;
+            border-left: 3px solid var(--accent);
+            padding-left: 12px;
+        }
+
+        /* --- SVG КРУГ --- */
+        .svg-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .svg-circle {
+            width: 180px;
+            height: 180px;
+            transition: fill 0.4s ease, filter 0.4s ease;
+            filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.2));
+        }
+
+        .svg-circle:hover {
+            filter: drop-shadow(0 0 25px rgba(255, 215, 0, 0.5));
+        }
+
+        .change-btn {
+            padding: 12px 28px;
+            background: transparent;
+            color: var(--accent);
+            border: 2px solid var(--accent);
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .change-btn:hover {
+            background: var(--accent);
+            color: #000;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+        }
+
+        /* --- КОЛАЖ (3 ФОТО) --- */
+        .collage {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .collage img {
+            width: 32%; /* 3 фото в ряд */
+            height: 150px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 1px solid #222;
+            filter: brightness(0.75) saturate(0.8);
+            transition: 0.3s;
+        }
+
+        .collage img:hover {
+            filter: brightness(1.1) saturate(1.2);
+            border-color: var(--accent);
+            transform: scale(1.03);
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #444;
+            border-top: 1px solid #1a1a1a;
+            margin-top: 40px;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 600px) {
+            .grid { grid-template-columns: 1fr; }
+            .collage { flex-direction: column; }
+            .collage img { width: 100%; height: 120px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1> Лабороторна робота</h1>
+            <p class="subtitle">Тёмная тема • Интерактивный вектор • Колаж</p>
+        </header>
+
+        <div class="grid">
+            <!-- БЛОК SVG КРУГ + КНОПКА -->
+            <div class="card">
+                <h3>🟡 SVG Файл и лого</h3>
+                <div class="svg-wrapper">
+                    <!-- ⬇️ Начальный цвет жёлтый (#FFD700) -->
+                    <svg id="targetCircle" class="svg-circle" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="100" cy="100" r="85" fill="#FFD700" />
+                    </svg>
+                    
+                    <!-- Кнопка смены цвета -->
+                    <button class="change-btn" onclick="changeSVGColor()">Изменить цвет</button>
+                </div>
+                <p style="margin-top:15px; font-size:0.85rem; color:#666; text-align:center;">
+                    Цвет меняется через JavaScript (атрибут <code>fill</code>)
+                </p>
+            </div>
+
+            <!-- БЛОК ФОТОКОЛАЖ (3 ФОТО) -->
+            <div class="card">
+                <h3>📷 Фотоколаж</h3>
+                <div class="collage">
+                    <!-- 3 изображения в ряд -->
+                    <img src="stalk_1.png" alt="Stalker 1">
+                    <img src="stalk_2.png" alt="Stalker 2">
+                    <img src="stalk_3.png" alt="Stalker 3">
+                </div>
+                <p style="margin-top:15px; font-size:0.85rem; color:#666; text-align:center;">
+                </p>
+            </div>
+        </div>
+
+        <footer>
+            <p>© 2026 Практическая работа | HTML + CSS + SVG + JS</p>
+        </footer>
+    </div>
+
+    <script>
+        // Массив цветов
+        const colors = [
+            '#3498db', '#e74c3c', '#2ecc71', '#9b59b6', 
+            '#f39c12', '#1abc9c', '#00cec9', '#ff6b6b'
+        ];
+
+        function changeSVGColor() {
+            const circle = document.querySelector('#targetCircle circle');
+            const randomColor = colors[Math.floor(Math.random() * colors.length)];
+            
+            // Меняем цвет
+            circle.setAttribute('fill', randomColor);
+            
+            // Обновляем стиль кнопки
+            const btn = document.querySelector('.change-btn');
+            btn.style.borderColor = randomColor;
+            btn.style.color = randomColor;
+            btn.style.boxShadow = `0 0 15px ${randomColor}40`;
+        }
+    </script>
+</body>
+</html>
